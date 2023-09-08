@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Expenses from "./components/Expenses";
+import NewExpense from "./components/NewExpense/NewExpense";
 function App() {
+  const expenses = [
+    { Title: "Night out", Amount: 231.5, date: new Date() },
+    { Title: "Car", Amount: 232.5, date: new Date() },
+    { Title: "Bills", Amount: 241.5, date: new Date() },
+    { Title: "Water", Amount: 23.5, date: new Date() },
+  ];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NewExpense />
+      <Expenses items={expenses} />
     </div>
   );
 }
