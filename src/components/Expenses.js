@@ -1,16 +1,72 @@
-
-import ExpenseItems from "./ExpenseItems";
 import "./Expenses.css";
 import Card from "./Card";
+import ExpensesFilter from "./ExpenseFilter";
+import { useState } from "react";
+import ExpensesList from "./ExpensesList";
+import ExpenseChart from "./ExpenseChart";
 
-function Expenses (props) {
+function Expenses(props) {
+  const [filteredValue, setFilteredValue] = useState("2020");
+
+  const onFilterHandler = (filtervalue) => {
+    console.log("value is", filtervalue);
+    setFilteredValue(filtervalue);
+  };
+
+  const filterUsed = props.items.filter((expense) => {
+    return expense.date.getFullYear().toString() === filteredValue;
+  });
+  
+/*   let expensesContent = <p> No Data is Added </p>;
+  if (filterUsed.length > 0)  {
+       expensesContent = filterUsed.map((expense) => (
+      <ExpenseItems
+        key={expense.id}
+        title={expense.Title}
+        date={expense.date}
+        amount={expense.Amount}
+      />
+    ))
+  } */
+
+
+
 
   return (
-    <Card className="expenses">
-      <ExpenseItems title={props.items[0].Title} date={props.items[0].date} amount={props.items[0].Amount}></ExpenseItems>
-      <ExpenseItems title={props.items[1].Title} date={props.items[1].date} amount={props.items[1].Amount}></ExpenseItems>
-      <ExpenseItems title={props.items[2].Title} date={props.items[2].date} amount={props.items[3].Amount}></ExpenseItems>
-    </Card>
+    <div>
+      <Card className="expenses">
+        <ExpensesFilter filter={onFilterHandler} selected={filteredValue} />
+
+{/*    ##     Ternary Expression
+        {filterUsed.length === 0 ? <p> No Data </p> :filterUsed.map((expense) => (
+          <ExpenseItems
+            key={expense.id}
+            title={expense.Title}
+            date={expense.date}
+            amount={expense.Amount}
+          />
+        ))} */}
+
+
+{/*         ##   AND && Operator
+        {filterUsed.length === 0 && <p> No data to display</p>}
+        {filterUsed.length === 0 && filterUsed.map((expense) => (
+          <ExpenseItems
+            key={expense.id}
+            title={expense.Title}
+            date={expense.date}
+            amount={expense.Amount}
+          />
+        ))}   */}
+
+{/*         {expensesContent} */}
+        <ExpenseChart expenses={filterUsed} />
+
+        <ExpensesList listitems={filterUsed} />
+
+
+      </Card>
+    </div>
   );
 }
 
